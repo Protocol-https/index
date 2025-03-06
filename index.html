@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ответы по зачетам</title>
+    <style>
+        /* Основные стили */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #121212;
+            color: #E0E0E0;
+            line-height: 1.6;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Навигация */
+        nav {
+            width: 250px;
+            background-color: #1E1E1E;
+            padding: 20px;
+            box-shadow: 4px 0 10px rgba(0, 0, 0, 0.3);
+            transition: width 0.3s ease;
+            position: fixed;
+            height: calc(100vh - 40px);
+            overflow-y: auto;
+        }
+
+        nav.collapsed {
+            width: 80px;
+        }
+
+        nav.collapsed ul li a span {
+            display: none;
+        }
+
+        nav.collapsed .toggle-btn i {
+            transform: rotate(180deg);
+        }
+
+        .toggle-btn {
+            background: none;
+            border: none;
+            color: #8AB4F8;
+            font-size: 1.5rem;
+            cursor: pointer;
+            margin-bottom: 20px;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .toggle-btn span {
+            font-size: 1.2rem;
+            transition: opacity 0.3s ease, font-size 0.3s ease;
+        }
+
+        nav.collapsed .toggle-btn span {
+            opacity: 0; /* Скрываем текст при свернутом меню */
+            font-size: 0; /* Уменьшаем размер шрифта до нуля */
+        }
+
+        .toggle-btn:hover {
+            color: #1A73E8;
+        }
+
+        /* Логотип сайта */
+        .logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 10px;
+            border-radius: 6px;
+            background: linear-gradient(145deg, #2D2D2D, #1E1E1E);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .logo span {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #8AB4F8;
+            white-space: nowrap;
+        }
+
+        nav.collapsed .logo span {
+            display: none;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        nav ul li {
+            margin: 15px 0;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-radius: 6px;
+            background: linear-gradient(145deg, #2D2D2D, #1E1E1E);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        nav ul li a.active {
+            background: linear-gradient(145deg, #3D3D3D, #2D2D2D);
+            color: #8AB4F8;
+        }
+
+        nav ul li a i {
+            margin-right: 10px;
+            font-size: 1.2rem;
+            color: #8AB4F8;
+            flex-shrink: 0;
+        }
+
+        nav ul li a:hover {
+            background: linear-gradient(145deg, #3D3D3D, #2D2D2D);
+            color: #8AB4F8;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Основной контент */
+        main {
+            flex: 1;
+            padding: 30px;
+            max-width: 800px;
+            margin-left: 290px;
+            padding-bottom: 100px;
+        }
+
+        h2 {
+            color: #8AB4F8;
+            font-size: 2.5rem;
+            margin-bottom: 25px;
+            text-shadow: 0 2px 4px rgba(138, 180, 248, 0.3);
+            font-weight: 600;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        ul li {
+            background-color: #2D2D2D;
+            margin: 15px 0;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        ul li:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        ul li strong {
+            color: #8AB4F8;
+            font-weight: 600;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        ul li strong:hover {
+            color: #1A73E8;
+        }
+
+        .explanation {
+            display: none;
+            margin-top: 10px;
+            padding: 15px;
+            background-color: #3D3D3D;
+            border-radius: 8px;
+            color: #B0B0B0;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .explanation.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        footer {
+            background-color: #0A0A0A;
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+            font-size: 0.9rem;
+            box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .subject-icon {
+            font-size: 2.5rem;
+            color: #8AB4F8;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(138, 180, 248, 0.3);
+        }
+
+        .subject-description {
+            font-size: 1.1rem;
+            color: #B0B0B0;
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .welcome-text {
+            font-size: 1.2rem;
+            color: #B0B0B0;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .welcome-text strong {
+            color: #8AB4F8;
+            font-weight: 600;
+        }
+
+        .welcome-text a {
+            color: #8AB4F8;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .welcome-text a:hover {
+            color: #1A73E8;
+        }
+
+        .last-opened {
+            font-size: 0.9rem;
+            color: #8AB4F8;
+            margin-left: 10px;
+            font-style: italic;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Навигация -->
+    <nav id="sidebar">
+        <button class="toggle-btn" onclick="toggleSidebar()">
+            <i class="fas fa-bars"></i>
+            <span class="logo-text">Меню</span>
+        </button>
+        <div class="logo">
+            <img src="https://avatars.mds.yandex.net/i?id=5c03495700f342493c4218a4a1311efd9654188d-9083123-images-thumbs&n=13" alt="Логотип">
+            <span>Дисциплины</span>
+        </div>
+        <ul>
+            <li><a onclick="showPage('home')" class="active"><i class="fas fa-home"></i><span>Главная</span></a></li>
+            <li><a onclick="showPage('computer_networks')"><i class="fas fa-network-wired"></i><span>Монтаж и эксплуатация компьютерных сетей</span></a></li>
+            <li><a onclick="showPage('multiservice_networks')"><i class="fas fa-satellite-dish"></i><span>Монтаж и эксплуатация мультисервисных сетей, мобильной связи и кабельного телевидения</span></a></li>
+            <li><a onclick="showPage('quantum_communication')"><i class="fas fa-atom"></i><span>Основы квантовой коммуникации</span></a></li>
+            <li><a onclick="showPage('entrepreneurship')"><i class="fas fa-business-time"></i><span>Основы предпринимательства</span></a></li>
+            <li><a onclick="showPage('safety')"><i class="fas fa-shield-alt"></i><span>Безопасность жизнедеятельности</span></a></li>
+        </ul>
+    </nav>
+
+    <!-- Основной контент -->
+    <main>
+        <!-- Главная страница -->
+        <div id="home" class="page active">
+            <h2>Добро пожаловать!</h2>
+            <div class="welcome-text">
+                <p>
+                    Добро пожаловать на сайт <strong>Ответы по зачетам</strong>! Здесь вы найдете подробные ответы на вопросы по различным предметам, которые помогут вам успешно подготовиться к зачетам и экзаменам.
+                </p>
+                <p>
+                    Наш сайт создан для студентов, которые хотят быстро и эффективно разобраться в сложных темах. Мы собрали ответы на самые распространенные вопросы по таким предметам, как:
+                </p>
+                <ul>
+                    <li>
+                        <strong onclick="toggleExplanation('subject1')">Монтаж и эксплуатация компьютерных сетей</strong>
+                        <div id="subject1" class="explanation">
+                            <strong>Описание:</strong> Основы построения и обслуживания сетей, включая топологии, типы кабелей и IP-адресацию.
+                        </div>
+                    </li>
+                    <li>
+                        <strong onclick="toggleExplanation('subject2')">Монтаж и эксплуатация мультисервисных сетей, мобильной связи и кабельного телевидения</strong>
+                        <div id="subject2" class="explanation">
+                            <strong>Описание:</strong> Современные технологии связи, включая мультисервисные сети, мобильную связь и кабельное телевидение.
+                        </div>
+                    </li>
+                    <li>
+                        <strong onclick="toggleExplanation('subject3')">Основы квантовой коммуникации</strong>
+                        <div id="subject3" class="explanation">
+                            <strong>Описание:</strong> Передовые технологии передачи данных с использованием квантовых состояний частиц.
+                        </div>
+                    </li>
+                    <li>
+                        <strong onclick="toggleExplanation('subject4')">Основы предпринимательства</strong>
+                        <div id="subject4" class="explanation">
+                            <strong>Описание:</strong> Ключевые аспекты ведения бизнеса, включая бизнес-планирование и SWOT-анализ.
+                        </div>
+                    </li>
+                    <li>
+                        <strong onclick="toggleExplanation('subject5')">Безопасность жизнедеятельности</strong>
+                        <div id="subject5" class="explanation">
+                            <strong>Описание:</strong> Правила и рекомендации для обеспечения безопасности в различных ситуациях.
+                        </div>
+                    </li>
+                </ul>
+                <p>
+                    Выберите интересующий вас предмет из меню слева, чтобы начать изучение. Если у вас есть вопросы или предложения, пожалуйста, <a href="mailto:support@example.com">свяжитесь с нами</a>.
+                </p>
+                <p>
+                    Удачи в подготовке! 🚀
+                </p>
+            </div>
+        </div>
+
+        <!-- Монтаж и эксплуатация компьютерных сетей -->
+        <div id="computer_networks" class="page">
+            <h2><i class="fas fa-network-wired subject-icon"></i> Монтаж и эксплуатация компьютерных сетей</h2>
+            <p class="subject-description">Ответы на вопросы по монтажу и эксплуатации компьютерных сетей с подробными пояснениями.</p>
+            <ul>
+                <li>
+                    <strong onclick="toggleExplanation('cn1')">Вопрос 1:</strong> Что такое топология сети?
+                    <div id="cn1" class="explanation">
+                        <strong>Ответ:</strong> Топология сети — это способ соединения компьютеров и других устройств в сети. Основные типы топологий: шина, звезда, кольцо и смешанная.
+                    </div>
+                </li>
+                <li>
+                    <strong onclick="toggleExplanation('cn2')">Вопрос 2:</strong> Какие бывают типы кабелей?
+                    <div id="cn2" class="explanation">
+                        <strong>Ответ:</strong> Основные типы кабелей: витая пара (UTP, STP), коаксиальный кабель и оптоволокно.
+                    </div>
+                </li>
+                <li>
+                    <strong onclick="toggleExplanation('cn3')">Вопрос 3:</strong> Что такое IP-адрес?
+                    <div id="cn3" class="explanation">
+                        <strong>Ответ:</strong> IP-адрес — это уникальный идентификатор устройства в сети, который используется для передачи данных.
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Монтаж и эксплуатация мультисервисных сетей, мобильной связи и кабельного телевидения -->
+        <div id="multiservice_networks" class="page">
+            <h2><i class="fas fa-satellite-dish subject-icon"></i> Монтаж и эксплуатация мультисервисных сетей, мобильной связи и кабельного телевидения</h2>
+            <p class="subject-description">Ответы на вопросы по мультисервисным сетям, мобильной связи и кабельному телевидению.</p>
+            <ul>
+                <li>
+                    <strong onclick="toggleExplanation('ms1')">Вопрос 1:</strong> Что такое мультисервисная сеть?
+                    <div id="ms1" class="explanation">
+                        <strong>Ответ:</strong> Мультисервисная сеть — это сеть, которая поддерживает передачу различных типов данных (голос, видео, интернет) в рамках одной инфраструктуры.
+                    </div>
+                </li>
+                <li>
+                    <strong onclick="toggleExplanation('ms2')">Вопрос 2:</strong> Какие технологии используются в мобильной связи?
+                    <div id="ms2" class="explanation">
+                        <strong>Ответ:</strong> Основные технологии: GSM, 3G, 4G LTE и 5G.
+                    </div>
+                </li>
+                <li>
+                    <strong onclick="toggleExplanation('ms3')">Вопрос 3:</strong> Как работает кабельное телевидение?
+                    <div id="ms3" class="explanation">
+                        <strong>Ответ:</strong> Кабельное телевидение передает сигналы через коаксиальные кабели или оптоволокно, обеспечивая высокое качество изображения и звука.
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Основы квантовой коммуникации -->
+        <div id="quantum_communication" class="page">
+            <h2><i class="fas fa-atom subject-icon"></i> Основы квантовой коммуникации</h2>
+            <p class="subject-description">Ответы на вопросы по квантовой коммуникации.</p>
+            <ul>
+                <li>
+                    <strong onclick="toggleExplanation('qc1')">Вопрос 1:</strong> Что такое квантовая коммуникация?
+                    <div id="qc1" class="explanation">
+                        <strong>Ответ:</strong> Квантовая коммуникация — это передача информации с использованием квантовых состояний частиц, таких как фотоны.
+                    </div>
+                </li>
+                <li>
+                    <strong onclick="toggleExplanation('qc2')">Вопрос 2:</strong> Какие преимущества у квантовой связи?
+                    <div id="qc2" class="explanation">
+                        <strong>Ответ:</strong> Основные преимущества: высокая безопасность и невозможность перехвата данных без обнаружения.
+                    </div>
+                </li>
+                <li>
+                    <strong onclick="toggleExplanation('qc3')">Вопрос 3:</strong> Что такое квантовая запутанность?
+                    <div id="qc3" class="explanation">
+                        <strong>Ответ:</strong> Квантовая запутанность — это явление, при котором состояния двух частиц связаны, даже если они находятся на большом расстоянии друг от друга.
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Основы предпринимательства -->
+        <div id="entrepreneurship" class="page">
+            <h2><i class="fas fa-business-time subject-icon"></i> Основы предпринимательства</h2>
+            <p class="subject-description">Ответы на вопросы по основам предпринимательства.</p>
+            <ul>
+                <li>
+                    <strong onclick="toggleExplanation('ep1')">Вопрос 1:</strong> Что такое бизнес-план?
+                    <div id="ep1" class="explanation">
+                        <strong>Ответ:</strong> Бизнес-план — это документ, описывающий цели бизнеса, стратегии их достижения и финансовые прогнозы.
+                    </div>
+                </li>
+                <li>
+                    <strong onclick="toggleExplanation('ep2')">Вопрос 2:</strong> Что такое SWOT-анализ?
+                    <div id="ep2" class="explanation">
+                        <strong>Ответ:</strong> SWOT-анализ — это метод анализа сильных (Strengths), слабых (Weaknesses), возможностей (Opportunities) и угроз (Threats) бизнеса.
+                    </div>
+                </li>
+                <li>
+                    <strong onclick="toggleExplanation('ep3')">Вопрос 3:</strong> Какие бывают формы предпринимательства?
+                    <div id="ep3" class="explanation">
+                        <strong>Ответ:</strong> Основные формы: ИП, ООО, АО и партнерства.
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Безопасность жизнедеятельности -->
+        <div id="safety" class="page">
+            <h2><i class="fas fa-shield-alt subject-icon"></i> Безопасность жизнедеятельности</h2>
+            <p class="subject-description">Ответы на вопросы по безопасности жизнедеятельности.</p>
+            <ul>
+                <li>
+                    <strong onclick="toggleExplanation('sf1')">Вопрос 1:</strong> Что такое ЧС?
+                    <div id="sf1" class="explanation">
+                        <strong>Ответ:</strong> Чрезвычайная ситуация (ЧС) — это обстановка, которая может привести к человеческим жертвам, ущербу здоровью или окружающей среде.
+                    </div>
+                </li>
+                <li>
+                    <strong onclick="toggleExplanation('sf2')">Вопрос 2:</strong> Какие бывают виды ЧС?
+                    <div id="sf2" class="explanation">
+                        <strong>Ответ:</strong> ЧС бывают природные (землетрясения, наводнения) и техногенные (аварии, пожары).
+                    </div>
+                </li>
+                <li>
+                    <strong onclick="toggleExplanation('sf3')">Вопрос 3:</strong> Как действовать при пожаре?
+                    <div id="sf3" class="explanation">
+                        <strong>Ответ:</strong> Немедленно покинуть помещение, вызвать пожарных и не пользоваться лифтами.
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </main>
+
+    <!-- Футер -->
+    <footer>
+        <p>&copy; 2025 Ответы по зачетам</p>
+    </footer>
+
+    <script>
+        let lastOpenedPage = null;
+
+        // Функция для переключения между страницами
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+
+            document.querySelectorAll('.explanation').forEach(explanation => {
+                explanation.classList.remove('active');
+            });
+
+            document.getElementById(pageId).classList.add('active');
+
+            document.querySelectorAll('nav ul li a').forEach(link => {
+                link.classList.remove('active');
+            });
+
+            document.querySelector(`nav ul li a[onclick="showPage('${pageId}')"]`).classList.add('active');
+
+            if (lastOpenedPage && lastOpenedPage !== pageId) {
+                const lastOpenedElement = document.querySelector(`#${lastOpenedPage} .last-opened`);
+                if (lastOpenedElement) {
+                    lastOpenedElement.remove();
+                }
+            }
+
+            lastOpenedPage = pageId;
+        }
+
+        // Функция для раскрытия/скрытия пояснений
+        function toggleExplanation(id) {
+            const explanation = document.getElementById(id);
+            explanation.classList.toggle('active');
+        }
+
+        // Функция для сворачивания/разворачивания меню
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('collapsed');
+        }
+
+        // Функция для раскрытия названия при наведении
+        function expandMenuText() {
+            const navLinks = document.querySelectorAll('nav ul li a');
+            navLinks.forEach(link => {
+                link.addEventListener('mouseenter', () => {
+                    if (document.getElementById('sidebar').classList.contains('collapsed')) {
+                        link.querySelector('span').style.display = 'inline';
+                    }
+                });
+                link.addEventListener('mouseleave', () => {
+                    if (document.getElementById('sidebar').classList.contains('collapsed')) {
+                        link.querySelector('span').style.display = 'none';
+                    }
+                });
+            });
+        }
+
+        // Инициализация
+        window.onload = () => {
+            showPage('home');
+            expandMenuText();
+        };
+    </script>
+</body>
+</html>
