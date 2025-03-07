@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="https://github.com/Protocol-https/index/blob/main/image%20(1).png?raw=true">
     <title>Ответы по зачетам</title>
     <style>
         /* Основные стили */
@@ -179,15 +180,14 @@
         }
 
         footer {
-            background-color: #0A0A0A;
+            background-color: rgba(10, 10, 10, 0.8); /* Полупрозрачный фон */
             color: white;
             text-align: center;
-            padding: 15px 0;
-            position: fixed;
+            padding: 20px 0;
             width: 100%;
-            bottom: 0;
             font-size: 0.9rem;
             box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.3);
+            margin-top: auto; /* Футер прижимается к низу */
         }
 
         @keyframes fadeIn {
@@ -283,6 +283,42 @@
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
         }
 
+        /* Стили для мини-игры */
+        .game-container {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .game-container input[type="number"] {
+            padding: 10px;
+            font-size: 1rem;
+            border: 2px solid #8AB4F8;
+            border-radius: 6px;
+            background-color: #2D2D2D;
+            color: #E0E0E0;
+            margin-bottom: 10px;
+        }
+
+        .game-container button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            background-color: #8AB4F8;
+            color: #121212;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .game-container button:hover {
+            background-color: #1A73E8;
+        }
+
+        .game-container .result {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: #8AB4F8;
+        }
 
         /* Медиазапросы */
         @media (max-width: 768px) {
@@ -336,6 +372,7 @@
             <li><a onclick="showPage('quantum_communication')"><i class="fas fa-atom"></i><span>Основы квантовой коммуникации</span></a></li>
             <li><a onclick="showPage('entrepreneurship')"><i class="fas fa-business-time"></i><span>Основы предпринимательства</span></a></li>
             <li><a onclick="showPage('safety')"><i class="fas fa-shield-alt"></i><span>Безопасность жизнедеятельности</span></a></li>
+             <li><a onclick="showPage('game')"><i class="fas fa-gamepad"></i><span>Мини-игра</span></a></li>
         </ul>
     </nav>
 
@@ -391,6 +428,16 @@
                 <p>
                     Удачи в подготовке! 🚀
                 </p>
+            </div>
+        </div>
+           <!-- Мини-игра -->
+        <div id="game" class="page">
+            <h2><i class="fas fa-gamepad subject-icon"></i> Мини-игра: Угадай число</h2>
+            <div class="game-container">
+                <p>Я загадал число от 1 до 100. Попробуй угадать!</p>
+                <input type="number" id="guessInput" placeholder="Введите число">
+                <button onclick="checkGuess()">Проверить</button>
+                <div class="result" id="result"></div>
             </div>
         </div>
         <!-- Монтаж и эксплуатация компьютерных сетей -->
@@ -565,6 +612,28 @@
             const explanation = document.getElementById(id);
             explanation.classList.toggle('active');
         }
+          // Логика мини-игры
+        let targetNumber = Math.floor(Math.random() * 100) + 1;
+
+        function checkGuess() {
+            const guess = parseInt(document.getElementById('guessInput').value);
+            const resultElement = document.getElementById('result');
+
+            if (isNaN(guess)) {
+                resultElement.textContent = "Пожалуйста, введите число!";
+                return;
+            }
+
+            if (guess < targetNumber) {
+                resultElement.textContent = "Слишком маленькое число! Попробуй еще раз.";
+            } else if (guess > targetNumber) {
+                resultElement.textContent = "Слишком большое число! Попробуй еще раз.";
+            } else {
+                resultElement.textContent = "Поздравляю! Ты угадал число!";
+                targetNumber = Math.floor(Math.random() * 100) + 1; // Загадываем новое число
+            }
+        }
+
 
         // Инициализация
         window.onload = () => {
@@ -573,4 +642,3 @@
     </script>
 </body>
 </html>
-
