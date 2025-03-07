@@ -14,6 +14,7 @@
             color: #E0E0E0;
             line-height: 1.6;
             display: flex;
+            flex-direction: column;
             min-height: 100vh;
         }
 
@@ -115,7 +116,7 @@
         h2 {
             color: #8AB4F8;
             font-size: 2.5rem;
-            margin-bottom: 25px;
+            margin-bottom: 1.5rem;
             text-shadow: 0 2px 4px rgba(138, 180, 248, 0.3);
             font-weight: 600;
             position: relative;
@@ -280,6 +281,43 @@
         .card:hover {
             transform: translateY(-5px);
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+        }
+
+
+        /* Медиазапросы */
+        @media (max-width: 768px) {
+            nav {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+
+            main {
+                margin-left: 0;
+                padding: 20px;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            .welcome-text {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            .welcome-text {
+                font-size: 0.9rem;
+            }
+
+            .card {
+                width: 100%;
+            }
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -486,7 +524,7 @@
         </div>
     </main>
 
- <!-- Футер -->
+     <!-- Футер -->
     <footer>
         <p>&copy; 2025 Ответы по зачетам</p>
     </footer>
@@ -535,3 +573,4 @@
     </script>
 </body>
 </html>
+
